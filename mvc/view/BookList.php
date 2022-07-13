@@ -34,10 +34,10 @@
             <tr>
                <td> <?= $book->title ?> </td>
                <td> 
-                  <img src="<?=$book->image ?>" width="100" height="100">   
+                  <img src="<?= $book->image ?>" width="100" height="100">   
                </td>
                <td>
-                  <a class="btn btn-warning">Detail</a>
+                  <a href="index.php?title=<?= $book->title ?>" class="btn btn-warning">Detail</a>
                </td>
             </tr>
           <?php   
