@@ -1,7 +1,7 @@
 <?php 
 //khai báo lớp Book đại diện cho bảng Book trong database
 class Book {
-   //khai báo thuộc tính (attributes)
+   //khai báo thuộc tính (attributes) tương ứng với các cột trong bảng
    public $title;
    public $author;
    public $price;
