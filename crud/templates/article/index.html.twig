@@ -3,9 +3,10 @@
 {% block title %}Article index{% endblock %}
 
 {% block body %}
-    <h1>Article index</h1>
+<div class="container col-md-8 text-center mt-4">
+    <h1 class="alert alert-warning">Article List</h1>
 
-    <table class="table">
+    <table class="table table-primary">
         <thead>
             <tr>
                 <th>Id</th>
@@ -23,10 +24,10 @@
                 <td>{{ article.title }}</td>
                 <td>{{ article.author }}</td>
                 <td>{{ article.length }}</td>
-                <td>{{ article.date ? article.date|date('Y-m-d') : '' }}</td>
+                <td>{{ article.date ? article.date|date('d/m/Y') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
-                    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+                    <a class="btn btn-info" href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
+                    <a class="btn btn-warning" href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -36,6 +37,6 @@
         {% endfor %}
         </tbody>
     </table>
-
+</div>
     <a href="{{ path('app_article_new') }}">Create new</a>
 {% endblock %}
