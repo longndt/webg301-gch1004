@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mobile index{% endblock %}
+
+{% block body %}
+<div class="container-fluid col-md-8 text-center mt-4">
+    <h1 id="mobile">Mobile index</h1>
+    <a class="btn btn-outline-primary mb-3" href="{{ path('app_mobile_new') }}">Create new</a>
+    <table class="table table-primary">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Image</th>
+                <th>Bestseller</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for mobile in mobiles %}
+            <tr>
+                <td>{{ mobile.id }}</td>
+                <td>{{ mobile.name }}</td>
+                <td>{{ mobile.price }} $</td>
+                <td>{{ mobile.quantity }}</td>
+                <td><img class="product" src="{{ mobile.image }}" width="100" height="100"></td>
+                <td>{{ mobile.bestseller ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a class="btn btn-info" href="{{ path('app_mobile_show', {'id': mobile.id}) }}">show</a>
+                    <a href="{{ path('app_mobile_edit', {'id': mobile.id}) }}">
+                        <img src="{{ asset('button/edit.png')}}" width="50" height="50">
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
