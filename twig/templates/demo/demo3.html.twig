@@ -1,0 +1,28 @@
+{% extends "layout.html.twig" %}
+{% block content %}
+   <h1>Name : {{ name }}</h1>
+   <h1>Age : {{ tuoi }}</h1>
+   <h1>Grade : {{ grade }}</h1>
+   <h1>Address : {{ diachi }} </h1>
+   {% for s in sports %}
+   <ul>
+      <li>{{ s }}</li>
+   </ul>
+   {% endfor %}
+   Total : {{ sports|length}}
+   <br>
+   <table class="table table-primary">
+      <thead>
+         <tr>
+            <th>Sports name</th>
+         </tr>
+      </thead>
+      <tbody>
+         {% for sport in sports %}
+            <tr>
+               <td>{{ sport }}</td>
+            </tr>
+         {% endfor %}
+      </tbody>
+   </table>
+{% endblock %}
