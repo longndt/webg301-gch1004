@@ -34,12 +34,12 @@ class BlogController extends AbstractController
      $blogs = $managerRegistry->getRepository(Blog::class)->findAll();
 
      //convert array thành api (format: json hoặc xml)
-     $api = $this->serializerInterface->serialize($blogs,'xml');
+     $api = $this->serializerInterface->serialize($blogs,'json');
      //trả về 1 response chứa api 
      return new Response($api, 
                          Response::HTTP_OK , // code: 200
                          [
-                            'content-type' => 'application/xml'
+                            'content-type' => 'application/json'
                          ]
      );
    }
@@ -114,7 +114,25 @@ class BlogController extends AbstractController
 
    //SQL Query: UPDATE Blog WHERE id = '$id'
    #[Route('/blog/{id}', methods: 'PUT', name: 'update_blog_api')]
-   public function updateBlog ($id) {
-
-   }
+   public function updateBlog ($id, Request $request) {
+      //lấy ra object của $blog theo id 
+      $blog = $this->getDoctrine()->getRepository(Blog::class)->find($id);
+      if ($blog != null) {
+        //decode dữ liệu json gửi từ client về server
+        $data = json_decode($request->getContent(),true);
+        //set dữ liệu từ $data vào các thuộc tính trong $blog
+        $blog->setContent($data['content']);
+        $blog->setDate(\DateTime::createFromFormat('Y-m-d',$data['date']));
+        $blog->setTitle($data['title']);
+        //dùng entity (object) manager để update dữ liệu vào DB
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($blog);
+        $manager->flush();
+        //trả về response cho client
+        return new Response("Update blog succeed", Response::HTTP_ACCEPTED); //code: 202
+      }
+      else {  //$blog == null
+        return new Response("Blog id not found => Can not update");
+      }
+    }
 }
