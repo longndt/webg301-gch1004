@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+   <h5 class="text text-danger">Add new note successfully ! </h5>
+   <h4 class="text text-success">Content: {{ note.content }} </h4>
+   <h4 class="text text-success">Image: </h4>
+      <img src="{{ note.image }}" width="150" height="150">
+   <h4 class="text text-success">Date: {{ note.date | date('d/m/Y')}} </h4>
+{% endblock %}

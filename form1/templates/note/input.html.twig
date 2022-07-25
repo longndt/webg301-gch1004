@@ -1,0 +1,20 @@
+{# sử dụng bootstrap để format template cho form tự động #}
+{% form_theme noteForm 'bootstrap_5_layout.html.twig' %}
+
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="container col-md-6 text-center mt-3">
+   <h1 class="text text-primary">Add new Note</h1>
+   {# render ra form từ biến noteForm gửi từ controller #}
+   {# Cách 1: nhanh nhất nhưng không thay đổi được nội dung của form #}
+   {# {{ form (noteForm) }} #}
+   {# Cách 2: đầy đủ, có thể bổ sung thêm nội dung vào form #}
+   {{ form_start (noteForm) }}
+   {{ form_widget (noteForm) }}
+      <input class="btn btn-outline-danger" type="submit" value="Add">
+   {{ form_end (noteForm) }}
+</div>
+{% endblock %}
+
+
+

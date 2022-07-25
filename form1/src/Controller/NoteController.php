@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Note;
+use App\Form\NoteType;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,9 +75,28 @@ class NoteController extends AbstractController
 
     //Cách 2: sử dùng hàm createForm() => recommend
     //=> Tạo form ở file form riêng và gọi đến trong Controller
-    #[Route('/make', name: 'make_new_note')]
-    public function makeNewNote() {
+    #[Route('/add', name: 'add_new_note')]
+    public function makeNewNote(Request $request) {
+        //tạo object $note
         $note = new Note;
+        //tạo form từ file form NoteType và sử dụng hàm createForm
+        $form = $this->createForm(NoteType::class,$note);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $note->setContent($data->content);
+            $note->setImage($data->image);
+            $note->setDate(\DateTime::createFromFormat('Y-m-d',$data->date->format('Y-m-d')));
+            return $this->render('note/output.html.twig',
+            [
+                'note' => $note
+            ]);
+        }
+        //cách 2: render form bằng hàm renderForm()
+        return $this->renderForm('note/input.html.twig',
+        [
+            'noteForm' => $form
+        ]);
     }
 
     #[Route('/success', name: 'add_note_success')]
