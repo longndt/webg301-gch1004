@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Note;
+use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,7 +29,7 @@ class NoteController extends AbstractController
                      [
                         'widget' => 'single_text'
                      ])
-                     ->add("Save", SubmitType::class)
+                     //->add("Save", SubmitType::class)
                      ->getForm();
         //dùng form để handle (xử lý) request từ phía client
         $form->handleRequest($request);
@@ -36,12 +37,27 @@ class NoteController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //lấy dữ liệu từ form & lưu vào biến $data
             $data = $form->getData();
-            //set dữ liệu cho biến $content & $date
+            //set giá trị cho từng biến một để đẩy qua view
             $content = $data->content;
             $date = $data->date->format('Y-m-d');
             $image = $data->image;
-            //render ra thẳng trang success (gửi kèm dữ liệu đã nhập từ form)
-            return $this->render('note/success.html.twig',
+            //set toàn bộ thông tin vào object $note
+            //=> chỉ cần gửi duy nhất biến $note qua view
+            $note->setContent($content);
+            $note->setImage($image);
+            $note->setDate(\DateTime::createFromFormat('Y-m-d',$date));
+            //Cách 1: render ra trang success (gửi kèm dữ liệu đã nhập từ form)
+            //Note: cách này không thay đổi đường dẫn route (URL)
+            // return $this->render('note/success.html.twig',
+            // [
+            //     // 'content' => $content,
+            //     // 'date' => $date,
+            //     // 'image' => $image
+            //     'note' => $note
+            // ]);
+            //Cách 2: redirect sang trang success (được render ở function khác)
+            //Note: cách này sẽ thay đổi đường dẫn route (URL)
+            return $this->redirectToRoute('add_note_success',
             [
                 'content' => $content,
                 'date' => $date,
@@ -61,5 +77,18 @@ class NoteController extends AbstractController
     #[Route('/make', name: 'make_new_note')]
     public function makeNewNote() {
         $note = new Note;
+    }
+
+    #[Route('/success', name: 'add_note_success')]
+    public function addNoteSuccess (Request $request) {
+        $content = $request->query->get('content');
+        $date = $request->query->get('date');
+        $image = $request->query->get('image');
+        return $this->render('note/success.html.twig',
+        [
+            'content' => $content,
+            'date' => $date,
+            'image' => $image
+        ]);
     }
 }   
