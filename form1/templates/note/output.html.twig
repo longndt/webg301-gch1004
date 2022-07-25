@@ -6,4 +6,8 @@
    <h4 class="text text-success">Image: </h4>
       <img src="{{ note.image }}" width="150" height="150">
    <h4 class="text text-success">Date: {{ note.date | date('d/m/Y')}} </h4>
+   <h4 class="text text-success">Category: {{ note.category }} </h4>
+   <h4 class="text text-success">Quantity: {{ note.quantity }} </h4>
+   <h4 class="text text-success">Money: {{ note.money}} $ </h4>
+
 {% endblock %}

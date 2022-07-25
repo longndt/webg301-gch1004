@@ -87,6 +87,9 @@ class NoteController extends AbstractController
             $note->setContent($data->content);
             $note->setImage($data->image);
             $note->setDate(\DateTime::createFromFormat('Y-m-d',$data->date->format('Y-m-d')));
+            $note->setCategory($data->category);
+            $note->setMoney($data->money);
+            $note->setQuantity($data->quantity);
             return $this->render('note/output.html.twig',
             [
                 'note' => $note

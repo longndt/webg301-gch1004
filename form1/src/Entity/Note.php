@@ -22,6 +22,15 @@ class Note
     #[ORM\Column(type: 'string', length: 255)]
     public $image;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    public $category;
+
+    #[ORM\Column(type: 'integer')]
+    public $quantity;
+
+    #[ORM\Column(type: 'float')]
+    public $money;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +68,42 @@ class Note
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getMoney(): ?float
+    {
+        return $this->money;
+    }
+
+    public function setMoney(float $money): self
+    {
+        $this->money = $money;
 
         return $this;
     }

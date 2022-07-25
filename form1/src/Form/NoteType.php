@@ -4,7 +4,10 @@ namespace App\Form;
 
 use App\Entity\Note;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -34,6 +37,35 @@ class NoteType extends AbstractType
                 'label' => 'Deadline',
                 'required' => true,
                 'widget' => 'single_text'
+            ])
+            ->add('quantity', IntegerType::class,
+            [
+                'label' => 'Số lượng',
+                'required' => true,
+                'attr' => 
+                [
+                    'min' => 0,
+                    'max' => 20
+                ]
+            ])
+            ->add('money', MoneyType::class,
+            [
+                'label' => 'Tiền',
+                'required' => true,
+                'currency' => 'USD'
+            ])
+            ->add('category', ChoiceType::class,
+            [
+                'label' => 'Phân loại',
+                'required' => true,
+                'choices' => [
+                    'Cá nhân' => 'Personal',
+                    'Công việc' => 'Work',
+                    'Gia đình' => 'Family'
+                ],
+                'multiple' => false, //false (default), Hold CTRL to select muliple
+                'expanded' => false  //false: drop-down (default), true: radio button
+
             ])
         ;
     }
