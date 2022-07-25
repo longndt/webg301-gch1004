@@ -19,6 +19,9 @@ class Note
     #[ORM\Column(type: 'date')]
     public $date;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    public $image;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Note
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

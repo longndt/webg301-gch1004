@@ -3,8 +3,11 @@
 
 {% extends "base.html.twig" %}
 {% block body %}
+<div class="container col-md-6 text-center mt-3">
+   <h1 class="text text-primary">Create new Note</h1>
    {# render ra form từ biến noteForm gửi từ controller #}
    {{ form (noteForm) }}
+</div>
 {% endblock %}
 
 

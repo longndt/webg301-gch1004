@@ -1,7 +1,10 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-   <h3>Form submitted successfully ! </h3>
-   <h4>Content: {{ content }} </h4>
-   <h4>Date: {{ date | date('d/m/Y')}} </h4>
+   <h5 class="text text-danger">Add new note successfully ! </h5>
+   <h4 class="text text-success">Content: {{ content }} </h4>
+   <h4 class="text text-success">Image:
+      <img src="{{ image }}" alt="" width="150" height="150">
+   </h4> 
+   <h4 class="text text-success">Date: {{ date | date('d/m/Y')}} </h4>
 {% endblock %}

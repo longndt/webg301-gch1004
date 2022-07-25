@@ -23,6 +23,7 @@ class NoteController extends AbstractController
         //dữ liệu người dùng nhập vào sẽ lưu vào $note
         $form = $this->createFormBuilder($note)
                      ->add("content", TextType::class)
+                     ->add("image", TextType::class)
                      ->add("date", DateType::class,
                      [
                         'widget' => 'single_text'
@@ -38,11 +39,13 @@ class NoteController extends AbstractController
             //set dữ liệu cho biến $content & $date
             $content = $data->content;
             $date = $data->date->format('Y-m-d');
+            $image = $data->image;
             //render ra thẳng trang success (gửi kèm dữ liệu đã nhập từ form)
             return $this->render('note/success.html.twig',
             [
                 'content' => $content,
-                'date' => $date
+                'date' => $date,
+                'image' => $image
             ]);
         }
         //render ra form để người dùng nhập liệu
