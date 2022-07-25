@@ -23,7 +23,10 @@ class NoteController extends AbstractController
         //dữ liệu người dùng nhập vào sẽ lưu vào $note
         $form = $this->createFormBuilder($note)
                      ->add("content", TextType::class)
-                     ->add("date", DateType::class)
+                     ->add("date", DateType::class,
+                     [
+                        'widget' => 'single_text'
+                     ])
                      ->add("Save", SubmitType::class)
                      ->getForm();
         //dùng form để handle (xử lý) request từ phía client
@@ -35,13 +38,7 @@ class NoteController extends AbstractController
             //set dữ liệu cho biến $content & $date
             $content = $data->content;
             $date = $data->date->format('Y-m-d');
-            //cách 1: chuyển hướng về trang success (gửi kèm dữ liệu đã nhập từ form)
-            // return $this->redirectToRoute('add_note_success',
-            //     [
-            //         'content' => $content,
-            //         'date' => $date
-            //     ]);
-            //cách 2: render ra thẳng trang success (gửi kèm dữ liệu đã nhập từ form)
+            //render ra thẳng trang success (gửi kèm dữ liệu đã nhập từ form)
             return $this->render('note/success.html.twig',
             [
                 'content' => $content,
@@ -61,16 +58,5 @@ class NoteController extends AbstractController
     #[Route('/make', name: 'make_new_note')]
     public function makeNewNote() {
         $note = new Note;
-    }
-
-    #[Route('\success', name: 'add_note_success')]
-    public function addNoteSuccess (Request $request) {
-        $content = $request->query->get('content');
-        $date = $request->query->get('date');
-        return $this->render('note/success.html.twig',
-        [
-            'content' => $content,
-            'date' => $date
-        ]);
     }
 }   
