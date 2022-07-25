@@ -1,0 +1,7 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+   <h3>Form submitted successfully ! </h3>
+   <h4>Content: {{ content }} </h4>
+   <h4>Date: {{ date | date('d/m/Y')}} </h4>
+{% endblock %}

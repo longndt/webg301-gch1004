@@ -1,0 +1,11 @@
+{# sử dụng bootstrap để format template cho form tự động #}
+{% form_theme noteForm 'bootstrap_5_layout.html.twig' %}
+
+{% extends "base.html.twig" %}
+{% block body %}
+   {# render ra form từ biến noteForm gửi từ controller #}
+   {{ form (noteForm) }}
+{% endblock %}
+
+
+
