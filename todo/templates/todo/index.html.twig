@@ -11,9 +11,11 @@
         </tr>
     </thead>
     <tbody>
+    <h5 class="text text-danger">Total Todos: {{ todos | length}}
+    {% set i = 1 %}
     {% for todo in todos %}
         <tr>
-            <td>{{ todo.id }}</td>
+            <td>{{ i }}</td>
             <td>{{ todo.title }}</td>
             <td>{{ todo.date | date("d/m/Y") }}</td>
             <td>
@@ -24,6 +26,7 @@
                 >Delete</a>
             </td>
         </tr>
+        {% set i = i + 1 %}
     {% endfor %}
     </tbody>
 </table>
