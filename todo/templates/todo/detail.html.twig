@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="row">
+   <div class="col">
+      <img src="{{ todo.image }}" width="300" height="300">
+   </div>
+   <div class="col">
+      <h3 class="alert alert-primary">{{ todo.title }} </h3>
+      <h5 class="text text-warning">Content: {{ todo.content }}</h5>
+      <h4 class="text text-danger">Deadline: {{ todo.date | date("d/m/Y")}}
+   </div>
+</div>
+{% endblock %}

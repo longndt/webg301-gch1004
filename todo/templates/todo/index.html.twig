@@ -1,0 +1,31 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<table class="table table-danger">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Title</th>
+            <th>Due Date</th>
+            <th>Menu</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for todo in todos %}
+        <tr>
+            <td>{{ todo.id }}</td>
+            <td>{{ todo.title }}</td>
+            <td>{{ todo.date | date("d/m/Y") }}</td>
+            <td>
+                <a class="btn btn-info" href="{{ path("view_todo_by_id", {"id" : todo.id })}}">View</a>
+                <a class="btn btn-warning" href="#">Edit</a>
+                <a class="btn btn-danger" href="#"
+                onclick="return confirm('Are you sure to delete this Todo ?')";
+                >Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
