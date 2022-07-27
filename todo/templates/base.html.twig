@@ -28,10 +28,10 @@
         {% block header %}
            <ul class="nav justify-content-center mt-4 mb-4">
                <li class="nav-item">
-                   <a class="btn btn-outline-primary" href="{{ path("view_all_todo") }}">Todo List</a>
+                   <a class="btn btn-outline-primary" href="{{ path('view_all_todo') }}">Todo List</a>
                </li>
                <li class="nav-item">
-                   <a class="btn btn-outline-success" href="#">Add Todo</a>
+                   <a class="btn btn-outline-success" href="{{ path('add_todo')}}">Add Todo</a>
                </li>
                <li class="nav-item">
                    <a class="btn btn-outline-warning" 

@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Todo;
+use App\Form\TodoType;
 use App\Repository\TodoRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -59,5 +61,55 @@ class TodoController extends AbstractController
         $this->addFlash("Success", "Delete todo succeed !");
      }
      return $this->redirectToRoute("view_all_todo");
+   }
+
+   #[Route('/todo/add', name: 'add_todo')]
+   public function TodoAdd(Request $request) {
+      //tạo object của Todo để lưu dữ liệu từ form
+      $todo = new Todo;
+      //tạo form từ file TodoType
+      $form = $this->createForm(TodoType::class, $todo);
+      //handle request từ client 
+      $form->handleRequest($request);
+      //check xem form đã submit chưa & dữ liệu có hợp lệ không
+      if ($form->isSubmitted() && $form->isValid()) {
+         //gọi đến entity manager để lưu dữ liệu từ form vào DB
+         $manager = $this->getDoctrine()->getManager();
+         $manager->persist($todo);
+         $manager->flush();
+         //gửi thông báo thành công về front-end (view)
+         $this->addFlash("Success", "Add new Todo succeed !");
+         return $this->redirectToRoute("view_all_todo");
+      }
+      //render ra form để người dùng nhập liệu
+      return $this->renderForm("todo/add.html.twig",
+         [
+            'TodoForm' => $form
+         ]);
+   }
+
+   #[Route('/todo/edit/{id}', name: 'edit_todo')]
+   public function TodoEdit(Request $request, $id) {
+      //lấy object Todo từ DB thông qua id
+      $todo = $this->getDoctrine()->getRepository(Todo::class)->find($id);
+      //tạo form từ file TodoType
+      $form = $this->createForm(TodoType::class, $todo);
+      //handle request từ client 
+      $form->handleRequest($request);
+      //check xem form đã submit chưa & dữ liệu có hợp lệ không
+      if ($form->isSubmitted() && $form->isValid()) {
+         //gọi đến entity manager để lưu dữ liệu từ form vào DB
+         $manager = $this->getDoctrine()->getManager();
+         $manager->persist($todo);
+         $manager->flush();
+         //gửi thông báo thành công về front-end (view)
+         $this->addFlash("Success", "Edit Todo succeed !");
+         return $this->redirectToRoute("view_all_todo");
+      }
+      //render ra form để người dùng nhập liệu
+      return $this->renderForm("todo/edit.html.twig",
+         [
+            'TodoForm' => $form
+         ]);
    }
 }

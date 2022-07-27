@@ -19,9 +19,9 @@
             <td>{{ todo.title }}</td>
             <td>{{ todo.date | date("d/m/Y") }}</td>
             <td>
-                <a class="btn btn-info" href="{{ path("view_todo_by_id", {"id" : todo.id })}}">View</a>
-                <a class="btn btn-warning" href="#">Edit</a>
-                <a class="btn btn-danger" href="{{ path("delete_todo", {"id" : todo.id })}}"
+                <a class="btn btn-info" href="{{ path('view_todo_by_id', {'id' : todo.id })}}">View</a>
+                <a class="btn btn-warning" href="{{ path('edit_todo', {'id' : todo.id })}}}">Edit</a>
+                <a class="btn btn-danger" href="{{ path('delete_todo', {'id' : todo.id })}}"
                 onclick="return confirm('Are you sure to delete this Todo ?')";
                 >Delete</a>
             </td>
