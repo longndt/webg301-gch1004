@@ -11,7 +11,7 @@
         </tr>
     </thead>
     <tbody>
-    <h5 class="text text-danger">Total Todos: {{ todos | length}}
+    <h5 class="text text-danger">Total : {{ todos | length}}
     {% set i = 1 %}
     {% for todo in todos %}
         <tr>
@@ -21,7 +21,7 @@
             <td>
                 <a class="btn btn-info" href="{{ path("view_todo_by_id", {"id" : todo.id })}}">View</a>
                 <a class="btn btn-warning" href="#">Edit</a>
-                <a class="btn btn-danger" href="#"
+                <a class="btn btn-danger" href="{{ path("delete_todo", {"id" : todo.id })}}"
                 onclick="return confirm('Are you sure to delete this Todo ?')";
                 >Delete</a>
             </td>
