@@ -31,9 +31,19 @@ class TodoController extends AbstractController
    #[Route('/todo/view/{id}', name: 'view_todo_by_id')]
    public function TodoDetail($id) {
      $todo = $this->getDoctrine()->getRepository(Todo::class)->find($id);
-     return $this->render("todo/detail.html.twig",
+     //kiểm tra xem id có tồn tại không => biến $todo có null không
+     if ($todo != null) {
+        return $this->render("todo/detail.html.twig",
         [
             'todo' => $todo
         ]);
+     } else { //$todo == null
+        //gửi thông báo lỗi về front-end (client-side) bằng flash message
+        $this->addFlash("Error","Todo not found !");
+        //redirect về trang home
+        return $this->redirectToRoute("view_all_todo");
+     } 
    }
+
+   
 }
