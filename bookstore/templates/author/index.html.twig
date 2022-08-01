@@ -1,20 +1,41 @@
+{# giao diện dạng bảng cho admin quản lý #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AuthorController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/workspace/webg301-gch1004/bookstore/src/Controller/AuthorController.php'|file_link(0) }}">src/Controller/AuthorController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/workspace/webg301-gch1004/bookstore/templates/author/index.html.twig'|file_link(0) }}">templates/author/index.html.twig</a></code></li>
-    </ul>
-</div>
+<table class="table table-light">
+    <tr>
+        <th colspan="3" class="text text-danger"><h1>Author List</h1></th>
+        <th>
+            <a href="{{ path('author_add') }}">
+                <img src={{ asset('images/buttons/add.png') }} width="50" height="50">
+            </a>
+        </th>
+    </tr>
+    <tr>
+        <th class="text text-primary">Author Id</th>
+        <th class="text text-primary">Author Name</th>
+        <th class="text text-primary">Author Image</th>
+        <th class="text text-primary">Actions</th>
+    </tr>
+    {% for author in authors %}
+    <tr>
+        <td class="text text-success">{{ author.id }}</td>
+        <td class="text text-success">{{ author.name }}</td>
+        <td>
+            <img src="{{ author.image }}" width="100" height="120">
+        </td>
+        <td>
+            <a href="{{ path('author_detail', {'id' : author.id }) }}">
+                <img src="{{ asset('images/buttons/detail.png')}}" width="50" height="50">
+            </a>
+            <a href="{{ path('author_edit', {'id' : author.id }) }}">
+                <img src="{{ asset('images/buttons/edit.png')}}" width="50" height="50">
+            </a>
+            <a href="{{ path('author_delete', {'id' : author.id }) }}">
+                <img src="{{ asset('images/buttons/delete.png')}}" width="50" height="50">
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}
