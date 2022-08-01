@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container text-center mt-3">
+   <div class="row">
+      <div class="col-md-4">
+         <div class="card">
+            <img src="{{ book.image }}" width="200" height="250">
+         </div>
+      </div>
+      <div class="col-md-8">
+         <div class="card">
+            <div class="card-header">
+               <h1 class="text text-primary">{{ book.title }} </h1>
+            </div>
+            {% if book.quantity >= 1 %}
+               <div class="card-body">
+                  <h3 class="text text-info">Date: {{ book.date | date ('d/m/Y') }} </h3>
+                  <h3 class="text text-danger">Price: {{ book.price }} $ </h3>
+                  <h3 class="text text-success">In-stock: {{ book.quantity }} </h3>
+               </div>
+               <div class="card-footer">
+                  <form action="{{ path('add_to_cart') }}" method="post">
+                     <div class="form-group mb-3">
+                        <input type="number" name="quantity" min="1" max="{{ book.quantity }}">
+                     </div>
+                     <input type="hidden" name="id" value="{{ book.id }}" >
+                     <input class="btn btn-success" type="submit" value="Add to cart" /> 
+                  </form>
+               </div>
+            {% else %}
+               <div class="card-body">
+                  <h3 class="text text-info">Date: {{ book.date | date ('d/m/Y') }} </h3>
+                  <h3 class="text text-danger">Price: {{ book.price }} $ </h3>
+                  <h3 class="text text-success"> Out of stock </h3>
+               </div>
+            {% endif %}       
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

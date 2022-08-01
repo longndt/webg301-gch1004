@@ -67,4 +67,23 @@ class BookController extends AbstractController
    public function bookEdit ($id, Request $request) {
 
    }
+
+   #[Route('/cart', name: 'add_to_cart')]
+   public function addToCart (Request $request) {
+      $id = $request->get('id');
+      $book = $this->getDoctrine()->getRepository(Book::class)->find($id);
+      $quantity = $request->get('quantity');
+      $date = date('Y/m/d');
+      return $this->render('book/cart.html.twig',
+      [
+         'book' => $book,
+         'quantity' => $quantity,
+         'date' => $date
+      ]);
+   }
+
+   #[Route('/success', name: 'order_success')]
+   public function orderSuccess () {
+      
+   }
 }

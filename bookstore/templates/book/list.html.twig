@@ -11,15 +11,33 @@
                <div class="card p-3">
                   <div class="card-img-top">
                      <a href="{{ path('book_detail', {'id': book.id })}}">
-                        <img src="{{book.image}}" width="80" height="80">
+                        <img src="{{book.image}}" width="120" height="120">
                      </a>
                   </div>
                   <div class="card-title">
                      <h5 class="alert alert-heading">{{ book.title }} </h5>
                   </div>
                   <div class="card-subtitle">
-                     <h4 class="text text-danger">{{ book.price }} $</h4>
+                     <h4 class="text text-primary">{{ book.price }} $</h4>
                   </div>
+                  {% if book.quantity >= 1 %}
+                  <div class="card-body">
+                     <h3 class="text text-success"> In-stock: {{ book.quantity }} </h3>
+                  </div>
+                  <div class="card-footer">
+                     <form action="{{ path('add_to_cart') }}" method="post">
+                        <div class="form-group mb-3">
+                           <input type="number" name="quantity" min="1" max="{{ book.quantity }}">
+                        </div>
+                        <input type="hidden" name="id" value="{{ book.id }}" >
+                        <input class="btn btn-success" type="submit" value="Add to cart" /> 
+                     </form>
+                  </div>
+               {% else %}
+                  <div class="card-body">
+                     <h3 class="text text-danger"> Out of stock </h3>
+                  </div>
+               {% endif %} 
                </div>
             </div>
          {% endfor %}
