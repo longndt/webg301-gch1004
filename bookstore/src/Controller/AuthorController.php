@@ -86,7 +86,7 @@ class AuthorController extends AbstractController
             $form = $this->createForm(AuthorType::class,$author);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $manager = $this->managerRegistry->getManager();
+                $manager = $this->getDoctrine()->getManager();
                 $manager->persist($author);
                 $manager->flush();
                 $this->addFlash('Info', 'Edit author succeed !');

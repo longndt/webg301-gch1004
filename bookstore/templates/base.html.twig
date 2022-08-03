@@ -59,6 +59,18 @@
             </div>
         </div>
         
+        {% block flash %}
+        <div class="container col-md-5 text-center mt-3 mb-3">
+            {% for flash in app.session.flashBag.get('Warning') %}
+                 <p class="alert alert-danger">{{ flash }}</p>
+            {% endfor %}
+            {% for flash in app.session.flashBag.get('Info') %}
+                 <p class="alert alert-success">{{ flash }}</p>
+            {% endfor %}
+        </div>
+        
+        {% endblock %}
+
         {% endblock %}
 
         {% block body %}{% endblock %}

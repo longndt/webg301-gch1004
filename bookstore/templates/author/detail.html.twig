@@ -21,7 +21,16 @@
             </tr>
              <tr>
                <th class="bg-light col-md-5">Published Books</th>
-               <td class="col-md-7"> </td>
+               <td class="col-md-7">
+                  {% if author.books != null %}
+                      {% for book in author.books %}
+                           <a href="{{ path('book_detail', {'id' : book.id})}}">
+                              {{ book.title }} 
+                           </a>
+                        <br>
+                      {% endfor %}
+                  {% endif %}
+               </td>
             </tr>
          </table>
       </div>

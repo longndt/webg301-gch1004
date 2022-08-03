@@ -33,7 +33,7 @@ class Book
     #[ORM\ManyToOne(targetEntity: Genre::class, inversedBy: 'books')]
     private $genre;
 
-    #[ORM\ManyToMany(targetEntity: Author::class, mappedBy: 'books')]
+    #[ORM\ManyToMany(targetEntity: Author::class, inversedBy: 'books')]
     private $authors;
 
     public function __construct()
@@ -130,7 +130,6 @@ class Book
     {
         if (!$this->authors->contains($author)) {
             $this->authors[] = $author;
-            $author->addBook($this);
         }
 
         return $this;
@@ -138,9 +137,7 @@ class Book
 
     public function removeAuthor(Author $author): self
     {
-        if ($this->authors->removeElement($author)) {
-            $author->removeBook($this);
-        }
+        $this->authors->removeElement($author);
 
         return $this;
     }

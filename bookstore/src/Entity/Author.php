@@ -24,7 +24,7 @@ class Author
     #[ORM\Column(type: 'string', length: 255)]
     private $image;
 
-    #[ORM\ManyToMany(targetEntity: Book::class, inversedBy: 'authors')]
+    #[ORM\ManyToMany(targetEntity: Book::class, mappedBy: 'authors')]
     private $books;
 
     public function __construct()
@@ -85,6 +85,7 @@ class Author
     {
         if (!$this->books->contains($book)) {
             $this->books[] = $book;
+            $book->addAuthor($this);
         }
 
         return $this;
@@ -92,7 +93,9 @@ class Author
 
     public function removeBook(Book $book): self
     {
-        $this->books->removeElement($book);
+        if ($this->books->removeElement($book)) {
+            $book->removeAuthor($this);
+        }
 
         return $this;
     }

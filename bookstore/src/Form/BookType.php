@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class BookType extends AbstractType
 {
@@ -53,7 +54,7 @@ class BookType extends AbstractType
             ->add('image', TextType::class,
             [
                 'required' => true,
-                'label' => 'Author image',
+                'label' => 'Book image',
                 'attr' => [
                     'maxlength' => 255
                 ]
@@ -74,7 +75,7 @@ class BookType extends AbstractType
                  'class' => Author::class,
                  'choice_label' => 'name',
                  'multiple' =>  true,
-                 'expanded' => false
+                 'expanded' => true
             ])
             //Notes:
             /*

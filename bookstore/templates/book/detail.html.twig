@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<div class="container col-md-8 text-center mt-3">
+<div class="container col-md-8 mt-3">
    <div class="row">
       <div class="col-md-4">
          <div class="card">
@@ -11,13 +11,32 @@
       <div class="col-md-8">
          <div class="card">
             <div class="card-header">
-               <h1 class="text text-primary">{{ book.title }} </h1>
+               <h1 class="text text-primary text-center">{{ book.title }} </h1>
             </div>
             {% if book.quantity >= 1 %}
                <div class="card-body">
                   <h3 class="text text-info">Date: {{ book.date | date ('d/m/Y') }} </h3>
                   <h3 class="text text-danger">Price: {{ book.price }} $ </h3>
                   <h3 class="text text-success">In-stock: {{ book.quantity }} </h3>
+                  <h3 class="text text-warning">Genre : 
+                     {% if book.genre != null %}
+                        {{ book.genre.name }} 
+                     {% else %}
+                        N/A
+                     {% endif %}
+                  </h3>
+                  <h3 class="text text-warning">Author(s): </h3>
+                  {% if book.authors != null %}
+                       <ul>
+                        {% for author in book.authors %}
+                           <li>
+                              <a href="{{ path('author_detail', {'id': author.id })}}">
+                                 {{ author.name }}
+                              </a>
+                           </li>
+                        {% endfor %}
+                     </ul>
+                  {% endif %}
                </div>
                <div class="card-footer">
                   <form action="{{ path('add_to_cart') }}" method="post">
@@ -32,7 +51,25 @@
                <div class="card-body">
                   <h3 class="text text-info">Date: {{ book.date | date ('d/m/Y') }} </h3>
                   <h3 class="text text-danger">Price: {{ book.price }} $ </h3>
-                  <h3 class="text text-success"> Out of stock </h3>
+                  <h3 class="text text-warning">Genre: 
+                     {% if book.genre != null %}
+                        {{ book.genre.name }} 
+                     {% else %}
+                        N/A
+                     {% endif %}
+                  </h3>
+                  <h3 class="text text-warning">Author(s): </h3>
+                  {% if book.authors != null %}
+                       <ul>
+                        {% for author in book.authors %}
+                           <li>
+                              <a href="{{ path('author_detail', {'id': author.id })}}">
+                                 {{ author.name }}
+                              </a>
+                           </li>
+                        {% endfor %}
+                     </ul>
+                  {% endif %}
                </div>
             {% endif %}       
          </div>
