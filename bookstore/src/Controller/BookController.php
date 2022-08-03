@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Form\BookType;
 use App\Repository\BookRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,12 +61,42 @@ class BookController extends AbstractController
 
    #[Route('/add', name: 'book_add')]
    public function bookAdd (Request $request) {
-
+      $book = new Book;
+      $form = $this->createForm(BookType::class,$book);
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+         $manager = $this->getDoctrine()->getManager();
+         $manager->persist($book);
+         $manager->flush();
+         $this->addFlash('Info', 'Add book succeed !');
+         return $this->redirectToRoute("book_index");
+      }
+      return $this->renderForm("book/add.html.twig",
+      [
+            'bookForm' => $form
+      ]);
    }
 
    #[Route('/edit/{id}', name: 'book_edit')]
    public function bookEdit ($id, Request $request) {
-
+        $book = $this->getDoctrine()->getRepository(Book::class)->find($id);
+        if ($book == null) {
+            $this->addFlash('Warning', 'Book not existed !');
+         } else {
+            $form = $this->createForm(BookType::class,$book);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $manager = $this->managerRegistry->getManager();
+                $manager->persist($book);
+                $manager->flush();
+                $this->addFlash('Info', 'Edit book succeed !');
+                return $this->redirectToRoute("book_index");
+            }
+            return $this->renderForm("book/edit.html.twig",
+            [
+                'bookForm' => $form
+            ]);
+         }
    }
 
    #[Route('/cart', name: 'add_to_cart')]

@@ -1,0 +1,15 @@
+{% form_theme authorForm 'bootstrap_5_layout.html.twig' %}
+
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container col-md-6 text-center mt-3">
+   <h3 class="alert alert-primary mb-3">Add author</h3>
+   <div class="card p-3 bg-light">
+      {{ form_start (authorForm) }}
+      {{ form_widget (authorForm) }}
+         <input class="btn btn-success" type="submit" value="Add">
+      {{ form_end (authorForm) }}
+   </div>
+</div>
+{% endblock %}

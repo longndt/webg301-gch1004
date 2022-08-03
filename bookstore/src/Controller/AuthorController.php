@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Author;
+use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -59,11 +61,41 @@ class AuthorController extends AbstractController
 
    #[Route('/add', name: 'author_add')]
    public function authorAdd (Request $request) {
-
+      $author = new Author;
+      $form = $this->createForm(AuthorType::class,$author);
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+         $manager = $this->getDoctrine()->getManager();
+         $manager->persist($author);
+         $manager->flush();
+         $this->addFlash('Info', 'Add author succeed !');
+         return $this->redirectToRoute("author_index");
+      }
+      return $this->renderForm("author/add.html.twig",
+      [
+            'authorForm' => $form
+      ]);
    }
 
    #[Route('/edit/{id}', name: 'author_edit')]
    public function authorEdit ($id, Request $request) {
-
+        $author = $this->getDoctrine()->getRepository(Author::class)->find($id);
+        if ($author == null) {
+            $this->addFlash('Warning', 'Author not existed !');
+         } else {
+            $form = $this->createForm(AuthorType::class,$author);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $manager = $this->managerRegistry->getManager();
+                $manager->persist($author);
+                $manager->flush();
+                $this->addFlash('Info', 'Edit author succeed !');
+                return $this->redirectToRoute("author_index");
+            }
+            return $this->renderForm("author/edit.html.twig",
+            [
+                'authorForm' => $form
+            ]);
+         }
    }
 }
