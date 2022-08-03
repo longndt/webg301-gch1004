@@ -83,7 +83,5 @@ class BookController extends AbstractController
    }
 
    #[Route('/success', name: 'order_success')]
-   public function orderSuccess () {
-      
-   }
+   public function orderSuccess () {}
 }

@@ -15,6 +15,58 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>        {% endblock %}
     </head>
     <body>
+        {% block header %}
+        <div class="container mt-3 mb-4">
+        {# bs5-nav-ul #}
+            <ul class="nav justify-content-center bg-warning">
+                <li class="nav-item h2">
+                    <a class="nav-link" href="{{ path('home')}}">Home</a>
+                </li>
+                <li class="nav-item h2">
+                    <a class="nav-link" href="{{ path('book_list')}}">Store</a>
+                </li>
+                <li class="nav-item h2">
+                    <a class="nav-link" href="{{ path('book_index')}}">Book</a>
+                </li>
+                <li class="nav-item h2">
+                    <a class="nav-link" href="{{ path('author_index')}}">Author</a>
+                </li>
+                <li class="nav-item h2">
+                    <a class="nav-link" href="{{ path('genre_index')}}">Genre</a>
+                </li>
+                <li class="nav-item h2">
+                    <a class="nav-link text-danger" data-bs-toggle="modal" data-bs-target="#about" 
+                    >About</a>
+                </li>
+            </ul>
+        </div>
+        {# bs5-modal-default #}
+        <!-- Modal -->
+        <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-danger">About</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container text-center">
+                            <h5 class="text text-success">Web application developed by Symfony</h5>
+                            <img src="https://realvasi.com/wp-content/uploads/2021/11/Symfony-Features.png" width="250" height="250">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% endblock %}
+
         {% block body %}{% endblock %}
+
+        {% block footer %}
+        <div class="container mt-3 mb-3">
+            <p class="alert alert-success text-center h5">Demo web project - WEBG301 - Summer 2022</p>
+        </div>
+        {% endblock %}
     </body>
 </html>
