@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Genre;
+use App\Form\GenreType;
 use App\Repository\GenreRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,6 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/genre')]
 class GenreController extends AbstractController
 {
+   public function __construct(ManagerRegistry $managerRegistry)
+   {
+      $this->managerRegistry = $managerRegistry;
+   } 
+
   #[Route('/index', name: 'genre_index')]
    public function genreIndex () {
       $genres = $this->getDoctrine()->getRepository(Genre::class)->findAll();
@@ -44,12 +51,12 @@ class GenreController extends AbstractController
    }
 
    #[Route('/delete/{id}', name: 'genre_delete')]
-   public function genreDelete ($id, ManagerRegistry $managerRegistry) {
-     $genre = $managerRegistry->getRepository(Genre::class)->find($id);
+   public function genreDelete ($id) {
+     $genre = $this->managerRegistry->getRepository(Genre::class)->find($id);
      if ($genre == null) {
         $this->addFlash('Warning', 'Genre not existed !');
      } else {
-        $manager = $managerRegistry->getManager();
+        $manager = $this->managerRegistry->getManager();
         $manager->remove($genre);
         $manager->flush();
         $this->addFlash('Info', 'Delete genre succeed !');
@@ -59,11 +66,41 @@ class GenreController extends AbstractController
 
    #[Route('/add', name: 'genre_add')]
    public function genreAdd (Request $request) {
-
+      $genre = new Genre;
+      $form = $this->createForm(GenreType::class,$genre);
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+         $manager = $this->managerRegistry->getManager();
+         $manager->persist($genre);
+         $manager->flush();
+         $this->addFlash('Info', 'Add genre succeed !');
+         return $this->redirectToRoute("genre_index");
+      }
+      return $this->renderForm("genre/add.html.twig",
+      [
+            'genreForm' => $form
+      ]);
    }
 
    #[Route('/edit/{id}', name: 'genre_edit')]
    public function genreEdit ($id, Request $request) {
-
+        $genre = $this->managerRegistry->getRepository(Genre::class)->find($id);
+        if ($genre == null) {
+            $this->addFlash('Warning', 'Genre not existed !');
+         } else {
+            $form = $this->createForm(GenreType::class,$genre);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $manager = $this->managerRegistry->getManager();
+                $manager->persist($genre);
+                $manager->flush();
+                $this->addFlash('Info', 'Edit genre succeed !');
+                return $this->redirectToRoute("genre_index");
+            }
+            return $this->renderForm("genre/edit.html.twig",
+            [
+                'genreForm' => $form
+            ]);
+         }
    }
 }

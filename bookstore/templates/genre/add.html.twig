@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container col-md-6 text-center mt-3">
+   <h3 class="alert alert-primary mb-3">Add genre</h3>
+   <div class="card p-3 bg-light">
+      {{ form_start (genreForm) }}
+         <div class="form-group">
+           <label for="name" class="text text-danger h5">Genre Name</label>
+           {{ form_widget(genreForm.name, {
+            'attr' : {
+               'class' : 'form-control',
+               'placeholder' : 'Enter genre name',
+            }
+           })}}
+         </div>
+         <div class="form-group">
+           <label for="image" class="text text-danger h5">Genre Image</label>
+            {{ form_widget(genreForm.image, {
+               'attr' : {
+                  'class' : 'form-control',
+                  'placeholder' : 'Enter genre image url'
+               }
+            })}}
+         </div>
+         <input class="btn btn-success mt-3" type="submit" value="Edit">
+      {{ form_end (genreForm) }}
+   </div>
+</div>
+{% endblock %}
