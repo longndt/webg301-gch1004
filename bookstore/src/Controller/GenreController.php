@@ -55,7 +55,11 @@ class GenreController extends AbstractController
      $genre = $this->managerRegistry->getRepository(Genre::class)->find($id);
      if ($genre == null) {
         $this->addFlash('Warning', 'Genre not existed !');
-     } else {
+     } else if (count($genre->getBooks()) >= 1){ //check xem genre này có ràng buộc với book hay không trước khi xóa
+         //nếu có tối thiểu 1 book thì hiển thị lỗi và không cho xóa  
+      $this->addFlash('Warning', 'Can not delete this genre');
+     }   
+     else {
         $manager = $this->managerRegistry->getManager();
         $manager->remove($genre);
         $manager->flush();
