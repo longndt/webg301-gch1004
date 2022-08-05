@@ -38,6 +38,9 @@
                     <a class="nav-link text-danger" data-bs-toggle="modal" data-bs-target="#about" 
                     >About</a>
                 </li>
+                <li class="nav-item h2">
+                    <a class="nav-link" href="{{ path('app_logout')}}"><i><u>Logout</u></i></a>
+                </li>
             </ul>
         </div>
         {# bs5-modal-default #}
@@ -76,9 +79,9 @@
         {% block body %}{% endblock %}
 
         {% block footer %}
-        <div class="container mt-3 mb-3">
-            <p class="alert alert-success text-center h5">Demo web project - WEBG301 - Summer 2022</p>
-        </div>
+            <div class="container mt-3 mb-3">
+                <p class="alert alert-success text-center h5">Demo web project - WEBG301 - Summer 2022</p>
+            </div>
         {% endblock %}
     </body>
 </html>
