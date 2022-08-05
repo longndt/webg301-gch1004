@@ -9,11 +9,13 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/book')]
 class BookController extends AbstractController
 {
+   #[IsGranted("ROLE_ADMIN")]
    #[Route('/index', name: 'book_index')]
    public function bookIndex () {
       $books = $this->getDoctrine()->getRepository(Book::class)->findAll();

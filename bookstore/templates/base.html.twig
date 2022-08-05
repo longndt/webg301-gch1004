@@ -16,14 +16,12 @@
     </head>
     <body>
         {% block header %}
-        <div class="container mt-3 mb-4">
-        {# bs5-nav-ul #}
+        {% if is_granted ('ROLE_ADMIN') %}
+             <div class="container mt-3 mb-4">
+             {# bs5-nav-ul #}
             <ul class="nav justify-content-center bg-warning">
                 <li class="nav-item h2">
                     <a class="nav-link" href="{{ path('home')}}">Home</a>
-                </li>
-                <li class="nav-item h2">
-                    <a class="nav-link" href="{{ path('book_list')}}">Store</a>
                 </li>
                 <li class="nav-item h2">
                     <a class="nav-link" href="{{ path('book_index')}}">Book</a>
@@ -35,6 +33,21 @@
                     <a class="nav-link" href="{{ path('genre_index')}}">Genre</a>
                 </li>
                 <li class="nav-item h2">
+                    <a class="nav-link" href="{{ path('app_logout')}}"><i><u>Logout ({{ app.user.username }})</u></i></a>
+                </li>
+            </ul>
+        </div>
+        {% else %}  <!-- ROLE_CUSTOMER -->
+         <div class="container mt-3 mb-4">
+             {# bs5-nav-ul #}
+            <ul class="nav justify-content-center bg-warning">
+                <li class="nav-item h2">
+                    <a class="nav-link" href="{{ path('home')}}">Home</a>
+                </li>
+                <li class="nav-item h2">
+                    <a class="nav-link" href="{{ path('book_list')}}">Store</a>
+                </li>
+                <li class="nav-item h2">
                     <a class="nav-link text-danger" data-bs-toggle="modal" data-bs-target="#about" 
                     >About</a>
                 </li>
@@ -43,6 +56,8 @@
                 </li>
             </ul>
         </div>
+        {% endif %}
+       
         {# bs5-modal-default #}
         <!-- Modal -->
         <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
@@ -61,6 +76,7 @@
                 </div>
             </div>
         </div>
+        {% endblock %}
         
         {% block flash %}
         <div class="container col-md-5 text-center mt-3 mb-3">
@@ -71,9 +87,6 @@
                  <p class="alert alert-success">{{ flash }}</p>
             {% endfor %}
         </div>
-        
-        {% endblock %}
-
         {% endblock %}
 
         {% block body %}{% endblock %}
