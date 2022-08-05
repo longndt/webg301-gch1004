@@ -20,7 +20,9 @@
                   <h3 class="text text-success">In-stock: {{ book.quantity }} </h3>
                   <h3 class="text text-warning">Genre : 
                      {% if book.genre != null %}
-                        {{ book.genre.name }} 
+                        <a href="{{ path('genre_detail', {'id': book.genre.id })}}">
+                           {{ book.genre.name }} 
+                        </a>
                      {% else %}
                         N/A
                      {% endif %}
@@ -38,22 +40,15 @@
                      </ul>
                   {% endif %}
                </div>
-               <div class="card-footer">
-                  <form action="{{ path('add_to_cart') }}" method="post">
-                     <div class="form-group mb-3">
-                        <input type="number" name="quantity" min="1" max="{{ book.quantity }}">
-                     </div>
-                     <input type="hidden" name="id" value="{{ book.id }}" >
-                     <input class="btn btn-success" type="submit" value="Add to cart" /> 
-                  </form>
-               </div>
             {% else %}
                <div class="card-body">
                   <h3 class="text text-info">Date: {{ book.date | date ('d/m/Y') }} </h3>
                   <h3 class="text text-danger">Price: {{ book.price }} $ </h3>
                   <h3 class="text text-warning">Genre: 
                      {% if book.genre != null %}
-                        {{ book.genre.name }} 
+                        <a href="{{ path('genre_detail', {'id': book.genre.id })}}">
+                           {{ book.genre.name }} 
+                        </a>
                      {% else %}
                         N/A
                      {% endif %}
