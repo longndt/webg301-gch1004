@@ -1,0 +1,6 @@
+<h1>Web 1</h1>
+<h3 style="color: blue;">{{ app.session.get('fpt') }}</h3>
+{{ app.session.set('hanoi', "Hanoi is the capital of Vietnam") }}
+{% set year = 2022 %}
+{{ app.session.set('namhientai', year) }}
+<a href="{{ path('web2')}}">Move to web2</a>

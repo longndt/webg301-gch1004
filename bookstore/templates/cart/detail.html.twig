@@ -16,6 +16,7 @@
                <div class="card-body">
                   <table class="table table-bordered">
                      <tr>
+                        <th>Customer name</th>
                         <th>Book Title</th>
                         <th>Order Date</th>
                         <th>Order Quantity</th>
@@ -23,8 +24,9 @@
                         <th>Total Price</th>
                      </tr>
                      <tr>
+                        <td>{{ app.user.username }}</td>
                         <td>{{ book.title }}</td>
-                        <td>{{ date | date('d/m/Y')}}</td>
+                        <td>{{ 'now' | date('d/m/Y')}}</td>
                         <td>{{ quantity }} </td>         
                         <td>{{ book.price }} $ </td>
                         {% set total = book.price * quantity %}
@@ -33,6 +35,8 @@
                   </table>
                </div>  
                <div class="card-footer">
+               <form path="{{ 'order_success' }}" method="post">
+                  <input type="hidden" name="quantity" value={{ quantity }}>
                   <a class="btn btn-success"
                   onclick="return confirm('Are you sure to order this book ?')";
                   >Order</a>
