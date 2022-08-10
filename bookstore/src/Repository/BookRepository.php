@@ -47,32 +47,44 @@ class BookRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Book[] Returns an array of Book objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /** 
+     * @return Book[] 
+    */
+    //new books will be displayed first
+    public function sortBookByIdDesc()
     {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('book')
+            ->orderBy('book.id', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Book
-    {
+    public function sortBookPriceAsc() {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
+                    ->orderBy('b.price','ASC')
+                    ->getQuery()
+                    ->getResult()
+                    ;
+    }
+
+    public function sortBookPriceDesc() {
+        return $this->createQueryBuilder('b')
+                    ->orderBy('b.price','DESC')
+                    ->getQuery()
+                    ->getResult()
+                    ;
+    }
+
+    public function searchBookByTitle($keyword) 
+    {
+        return $this->createQueryBuilder('book')
+            ->andWhere('book.title LIKE :value')
+            ->setParameter('value', '%' . $keyword . '%')
+            ->orderBy('book.id', 'DESC')
+            ->setMaxResults(5)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
 }
