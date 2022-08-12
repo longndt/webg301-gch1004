@@ -56,7 +56,11 @@ class BookType extends AbstractType
             [
                 'label' => 'Book image',
                 'data_class' => null,
-                 
+                'required' => is_null ($builder->getData()->getImage())
+                 //TH1: Book đã có image thì không yêu cầu upload file ảnh mới
+                 //getImage() != null => required = false
+                //TH2: Book chưa có image thì yêu cầu upload file ảnh
+                 //getImage() = null => required = true    
             ])
             ->add('genre', EntityType::class,
             [
