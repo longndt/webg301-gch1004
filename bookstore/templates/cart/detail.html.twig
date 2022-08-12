@@ -1,6 +1,9 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+{# gọi biến session (được tạo ở controller) #}
+{% set book = app.session.get('book') %}
+{% set user = app.session.get('user') %}
 <div class="container text-center mt-3">
    <div class="row">
       <div class="col-md-4">
@@ -11,7 +14,7 @@
       <div class="col-md-8">
          <div class="card">
             <div class="card-header">
-               <h1 class="text text-primary"> Cart Info </h1>
+               <h1 class="text text-primary"> Order Detail </h1>
             </div>
                <div class="card-body">
                   <table class="table table-bordered">
@@ -24,22 +27,19 @@
                         <th>Total Price</th>
                      </tr>
                      <tr>
-                        <td>{{ app.user.username }}</td>
+                        <td>{{ user.username }}</td>
                         <td>{{ book.title }}</td>
-                        <td>{{ 'now' | date('d/m/Y')}}</td>
-                        <td>{{ quantity }} </td>         
+                        <td>{{ app.session.get('datetime') | date ('d/m/Y H:i:s')}}</td>
+                        <td>{{ app.session.get('quantity') }} </td>         
                         <td>{{ book.price }} $ </td>
-                        {% set total = book.price * quantity %}
-                        <td class="text text-danger">{{ total }} $ </td>
+                        <td class="text text-danger">{{ app.session.get('totalprice') }} $ </td>
                      </tr>
                   </table>
                </div>  
                <div class="card-footer">
-               <form path="{{ 'order_success' }}" method="post">
-                  <input type="hidden" name="quantity" value={{ quantity }}>
-                  <a class="btn btn-success"
-                  onclick="return confirm('Are you sure to order this book ?')";
-                  >Order</a>
+                  <a class="btn btn-success" href="{{ path('make_order')}}"
+                     onclick="return confirm('Are you sure to order this book ?')";
+                  >Make Order</a>
                </div>
          </div>
       </div>

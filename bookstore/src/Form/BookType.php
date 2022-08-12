@@ -2,19 +2,20 @@
 
 namespace App\Form;
 
-use App\Entity\Author;
 use App\Entity\Book;
 use App\Entity\Genre;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Author;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class BookType extends AbstractType
 {
@@ -51,13 +52,11 @@ class BookType extends AbstractType
                 'label' => 'Published Date',
                 'widget' => 'single_text'
             ])
-            ->add('image', TextType::class,
+            ->add('image', FileType::class,
             [
-                'required' => true,
                 'label' => 'Book image',
-                'attr' => [
-                    'maxlength' => 255
-                ]
+                'data_class' => null,
+                 
             ])
             ->add('genre', EntityType::class,
             [

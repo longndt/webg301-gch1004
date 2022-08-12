@@ -26,6 +26,7 @@ class BookController extends AbstractController
         ]);
    } 
 
+   #[IsGranted("ROLE_CUSTOMER")]
    #[Route('/list', name: 'book_list')]
    public function bookList() {
       $books = $this->getDoctrine()->getRepository(Book::class)->findAll();

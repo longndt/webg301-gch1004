@@ -33,7 +33,15 @@
                     <a class="nav-link" href="{{ path('genre_index')}}">Genre</a>
                 </li>
                 <li class="nav-item h2">
-                    <a class="nav-link" href="{{ path('app_logout')}}"><i><u>Logout ({{ app.user.username }})</u></i></a>
+                    <a class="nav-link" href="#">Order</a>
+                </li>
+                <li class="nav-item h2">
+                    <a class="nav-link" href="{{ path('app_logout')}}"><i><u>Logout 
+                     {# user already logged-in => show username #}
+                    {% if app.user != null %}
+                           ({{ app.user.username }})
+                    {% endif %}
+                    </u></i></a>
                 </li>
             </ul>
         </div>
@@ -48,11 +56,19 @@
                     <a class="nav-link" href="{{ path('book_list')}}">Store</a>
                 </li>
                 <li class="nav-item h2">
+                    <a class="nav-link" href="#">My Order</a>
+                </li>
+                <li class="nav-item h2">
                     <a class="nav-link text-danger" data-bs-toggle="modal" data-bs-target="#about" 
                     >About</a>
                 </li>
                 <li class="nav-item h2">
-                    <a class="nav-link" href="{{ path('app_logout')}}"><i><u>Logout ({{ app.user.username }})</u></i></a>
+                    <a class="nav-link" href="{{ path('app_logout')}}"><i><u>Logout 
+                     {# user already logged-in => show username #}
+                    {% if app.user != null %}
+                           ({{ app.user.username }})
+                    {% endif %}
+                    </u></i></a>
                 </li>
             </ul>
         </div>
