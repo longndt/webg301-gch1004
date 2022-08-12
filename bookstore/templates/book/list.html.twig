@@ -49,7 +49,7 @@
 						<div class="card p-3">
 							<div class="card-img-top">
 								<a href="{{ path('book_detail', {'id': book.id })}}">
-									<img src="{{book.image}}" width="120" height="120">
+									<img src="{{ asset('images/books/'~book.image) }}" width="120" height="120">
 								</a>
 							</div>
 							<div class="card-title">
